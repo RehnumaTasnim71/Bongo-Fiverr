@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block title %}Order Details{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-8">
+    <h2 class="mb-4">Order Details</h2>
+
+    <div class="card mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Service: {{ order.service.title }}</h5>
+        <p><strong>Seller:</strong> {{ order.seller.username }}</p>
+        <p><strong>Buyer:</strong> {{ order.buyer.username }}</p>
+        <p><strong>Status:</strong> 
+          {% if order.status == "completed" %}
+            <span class="badge bg-success">Completed</span>
+          {% elif order.status == "in_progress" %}
+            <span class="badge bg-info">In Progress</span>
+          {% else %}
+            <span class="badge bg-secondary">Pending</span>
+          {% endif %}
+        </p>
+        <p><strong>Ordered On:</strong> {{ order.created_at|date:"M d, Y" }}</p>
+
+        {% if order.delivery_file %}
+          <p><strong>Delivery File:</strong> 
+            <a href="{{ order.delivery_file.url }}" target="_blank">
+              {{ order.delivery_file.name|slice:"10:" }}
+            </a>
+          </p>
+        {% endif %}
+      </div>
+    </div>
+
+    {# Seller Mark Completed Form with File Upload #}
+    {% if user == order.seller and order.status == "in_progress" %}
+      <h4>Mark Order Completed</h4>
+      <form method="post" enctype="multipart/form-data" action="{% url 'complete_order' order.id %}">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="delivery_file" class="form-label">Upload Delivery File</label>
+          <input type="file" name="delivery_file" id="delivery_file" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-success">Complete Order</button>
+      </form>
+    {% endif %}
+    
+    {% if order.delivery_file %}
+      <p><strong>Delivery File:</strong>
+        <a href="{{ order.delivery_file.url }}" download class="btn btn-sm btn-success">Download</a>
+      </p>
+    {% endif %}
+
+    {# Buyer Review Form #}
+    {% if user.role == 'buyer' and order.status == 'completed' %}
+      <h4 class="mt-4">Leave a Review</h4>
+      <form method="post">
+        {% csrf_token %}
+        {% for field in form %}
+          <div class="mb-3">
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.errors %}
+              <div class="text-danger">{{ field.errors|striptags }}</div>
+            {% endif %}
+          </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Submit Review</button>
+      </form>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

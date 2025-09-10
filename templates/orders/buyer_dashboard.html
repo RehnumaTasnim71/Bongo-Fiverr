@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% block title %}Buyer Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+  <h2 class="mb-4 text-primary">Buyer Dashboard</h2>
+
+  <!-- Status Filter -->
+  <div class="card mb-4 p-3 shadow-sm">
+    <form method="get" class="d-flex align-items-center gap-2 flex-wrap">
+      <label for="status" class="form-label mb-0 fw-semibold">Filter by Status:</label>
+      <select name="status" id="status" class="form-select w-auto">
+        <option value="">All</option>
+        <option value="pending" {% if status_filter == "pending" %}selected{% endif %}>Pending</option>
+        <option value="completed" {% if status_filter == "completed" %}selected{% endif %}>Completed</option>
+      </select>
+      <button type="submit" class="btn btn-primary btn-sm">Filter</button>
+    </form>
+  </div>
+
+  <!-- Orders Section -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-light fw-semibold">Your Orders</div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-secondary">
+            <tr>
+              <th>Service</th>
+              <th>Seller</th>
+              <th>Status</th>
+              <th>Created At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+            <tr>
+              <td>{{ order.service.title }}</td>
+              <td>{{ order.seller.username }}</td>
+              <td>
+                {% if order.status == 'pending' %}
+                  <span class="badge bg-warning text-dark">Pending</span>
+                {% elif order.status == 'in_progress' %}
+                  <span class="badge bg-info text-dark">In Progress</span>
+                {% elif order.status == 'completed' %}
+                  <span class="badge bg-success">Completed</span>
+                {% endif %}
+              </td>
+              <td>{{ order.created_at|date:"Y-m-d H:i" }}</td>
+              <td>
+                <a href="{% url 'order_detail' order.id %}" class="btn btn-sm btn-outline-primary">Details</a>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" class="text-center">No orders found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reviews Section -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-header bg-light fw-semibold">Your Reviews</div>
+    <div class="card-body p-0">
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead class="table-secondary">
+            <tr>
+              <th>Service</th>
+              <th>Seller</th>
+              <th>Rating</th>
+              <th>Comment</th>
+              <th>Created At</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for review in reviews %}
+            <tr>
+              <td>{{ review.service.title }}</td>
+              <td>{{ review.seller.username }}</td>
+              <td>
+                {% for i in "12345"|slice:":review.rating"|make_list %}
+                  <i class="bi bi-star-fill text-warning"></i>
+                {% endfor %}
+              </td>
+              <td>{{ review.comment }}</td>
+              <td>{{ review.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="5" class="text-center">No reviews yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,88 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="{% url 'home' %}">Bongo-Fiverr</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto">
+        {% if user.is_authenticated %}
+
+
+        <!-- Seller-only link -->
+        {% if user.role == 'seller' %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'service_create' %}">Post a Service</a>
+        </li>
+        {% endif %}
+
+        <!-- 🔔 Notifications -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle position-relative" href="#" id="notificationsDropdown" role="button"
+            data-bs-toggle="dropdown">
+            🔔
+            {% if unread_count %}
+            <span class="badge bg-danger position-absolute top-0 start-100 translate-middle">
+              {{ unread_count }}
+            </span>
+            {% endif %}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+            {% for n in latest_notifications %}
+            <li>
+              <a class="dropdown-item {% if not n.is_read %}fw-bold{% endif %}"
+                href="{% url 'mark_notification_read' n.id %}">
+                {{ n.message|truncatechars:40 }}
+              </a>
+            </li>
+            {% empty %}
+            <li><span class="dropdown-item">No notifications</span></li>
+            {% endfor %}
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'notifications_list' %}">View all</a></li>
+          </ul>
+        </li>
+
+
+        <!-- 👤 Profile -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown">
+            {{ user.username }}
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+            <li>
+              <a class="dropdown-item" href="{% url 'profile_update' %}">My Profile</a>
+            </li>
+
+            {% if user.role == 'buyer' %}
+            <li><a class="dropdown-item" href="{% url 'buyer_dashboard' %}">Buyer Dashboard</a></li>
+            {% elif user.role == 'seller' %}
+            <li><a class="dropdown-item" href="{% url 'seller_dashboard' %}">Seller Dashboard</a></li>
+            {% endif %}
+
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+
+            <!-- Logout as POST -->
+            <li>
+              <form method="post" action="{% url 'logout' %}" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="dropdown-item text-danger">Logout</button>
+              </form>
+            </li>
+          </ul>
+        </li>
+
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Register</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>

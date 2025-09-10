@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}{{ service.name }}{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-8">
+    <h2>{{ service.name }}</h2>
+    <p class="text-muted">By {{ service.seller.username }}</p>
+    <p>{{ service.description }}</p>
+    <ul class="list-group mb-3">
+      <li class="list-group-item"><strong>Price:</strong> ${{ service.price }}</li>
+      <li class="list-group-item"><strong>Category:</strong> {{ service.get_category_display }}</li>
+      <li class="list-group-item"><strong>Delivery Time:</strong> {{ service.delivery_time }} days</li>
+    </ul>
+    {% if user.is_authenticated and user.role == 'buyer' %}
+      <a href="{% url 'place_order' service.id %}" class="btn btn-success">Place Order</a>
+    {% endif %}
+  </div>
+  <div class="col-md-4">
+    <h5>Reviews</h5>
+    {% for review in service.reviews.all %}
+      <div class="card mb-2">
+        <div class="card-body">
+          <strong>{{ review.buyer.username }}</strong> rated: {{ review.rating }}/5
+          <p class="mb-0">{{ review.comment }}</p>
+        </div>
+      </div>
+    {% empty %}
+      <p>No reviews yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
