@@ -14,7 +14,7 @@ def login_view(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            # Role-based redirect
+            
             if user.role == "seller":
                 return redirect("seller_dashboard")
             else:
@@ -26,12 +26,12 @@ def login_view(request):
 # ----- Register -----
 def register_view(request):
     if request.method == "POST":
-        form = RegisterForm(request.POST)  # Use RegisterForm
+        form = RegisterForm(request.POST)  
         if form.is_valid():
             user = form.save(commit=False)
-            user.is_active = True  # Email verification later
+            user.is_active = True  
             user.save()
-            # Assign group
+            
             if user.role == "seller":
                 group = Group.objects.get(name="Seller")
             else:
@@ -47,11 +47,17 @@ def register_view(request):
 @login_required
 def profile_update(request):
     if request.method == "POST":
-        form = ProfileUpdateForm(request.POST,request.FILES, instance=request.user)
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            form.save()
-            messages.success(request, "Profile updated successfully!")
-            return redirect("profile_update")
+            try:
+                form.save()
+                messages.success(request, "Profile updated successfully!")
+            except Exception as e:
+                messages.error(request, f"Error saving profile: {e}")
+                print(e)  
+            return redirect("profile")
+        else:
+            print(form.errors)  
     else:
         form = ProfileUpdateForm(instance=request.user)
     return render(request, "users/profile.html", {"form": form})

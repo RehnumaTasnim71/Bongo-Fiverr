@@ -29,7 +29,6 @@
                 </div>
             </div>
 
-
             <!-- Profile Edit Form (Initially Hidden) -->
             <div class="card shadow-sm p-4" id="editProfileForm" style="display:none;">
                 <form method="post" enctype="multipart/form-data">
@@ -39,12 +38,12 @@
                         <div class="col-12">
                             <label class="form-label">{{ field.label }}</label>
 
-                            {% if field.name == 'about_me' %}
-                            <textarea name="{{ field.name }}" class="form-control" rows="4"
-                                placeholder="Write something about yourself...">{{ field.value }}</textarea>
-                            {% elif field.name == 'profile_image' %}
+                            {% if field.name == 'profile_image' %}
                             <input type="file" name="{{ field.name }}" class="form-control"
                                 onchange="previewImage(event)">
+                            {% elif field.field.widget.input_type == 'textarea' %}
+                            <textarea name="{{ field.name }}" class="form-control" rows="4"
+                                placeholder="Write something...">{{ field.value }}</textarea>
                             {% else %}
                             <input type="{{ field.field.widget.input_type }}" name="{{ field.name }}"
                                 value="{{ field.value|default_if_none:'' }}" class="form-control">
@@ -63,54 +62,51 @@
                 </form>
             </div>
 
-        </div>
-    </div>
-</div>
 
-<script>
-    // Toggle edit form visibility
-    document.getElementById('editProfileBtn').addEventListener('click', function () {
-        const formCard = document.getElementById('editProfileForm');
-        if (formCard.style.display === "none") {
-            formCard.style.display = "block";
-            this.textContent = "Hide Edit Form";
-        } else {
-            formCard.style.display = "none";
-            this.textContent = "Edit Profile";
-        }
-    });
+            <script>
+                // Toggle edit form visibility
+                document.getElementById('editProfileBtn').addEventListener('click', function () {
+                    const formCard = document.getElementById('editProfileForm');
+                    if (formCard.style.display === "none") {
+                        formCard.style.display = "block";
+                        this.textContent = "Hide Edit Form";
+                    } else {
+                        formCard.style.display = "none";
+                        this.textContent = "Edit Profile";
+                    }
+                });
 
-    // Profile picture live preview
-    function previewImage(event) {
-        const output = document.getElementById('profilePreview');
-        output.src = URL.createObjectURL(event.target.files[0]);
-        output.onload = function () { URL.revokeObjectURL(output.src); }
-    }
-</script>
+                // Profile picture live preview
+                function previewImage(event) {
+                    const output = document.getElementById('profilePreview');
+                    output.src = URL.createObjectURL(event.target.files[0]);
+                    output.onload = function () { URL.revokeObjectURL(output.src); }
+                }
+            </script>
 
-<style>
-    /* Profile image styling */
-    .profile-img {
-        width: 150px;
-        height: 150px;
-        object-fit: cover;
-        /* crop and scale to fit box */
-        border-radius: 50%;
-        /* circular */
-        border: 2px solid #ddd;
-        padding: 2px;
-        transition: transform 0.3s ease-in-out;
-    }
+            <style>
+                /* Profile image styling */
+                .profile-img {
+                    width: 150px;
+                    height: 150px;
+                    object-fit: cover;
+                    /* crop and scale to fit box */
+                    border-radius: 50%;
+                    /* circular */
+                    border: 2px solid #ddd;
+                    padding: 2px;
+                    transition: transform 0.3s ease-in-out;
+                }
 
-    .profile-img:hover {
-        transform: scale(1.05);
-        cursor: pointer;
-    }
+                .profile-img:hover {
+                    transform: scale(1.05);
+                    cursor: pointer;
+                }
 
-    /* Card hover effect */
-    .card:hover {
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        transition: 0.3s ease-in-out;
-    }
-</style>
-{% endblock %}
+                /* Card hover effect */
+                .card:hover {
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+                    transition: 0.3s ease-in-out;
+                }
+            </style>
+            {% endblock %}
