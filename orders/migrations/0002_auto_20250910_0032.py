@@ -22,15 +22,15 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='review',
-            name='buyer',
-            field=models.ForeignKey(
-                default=1,  # temporary default, jekono existing user ID
-                on_delete=models.CASCADE,
-                related_name='reviews_given',
-                to=settings.AUTH_USER_MODEL,
-            ),
-            preserve_default=False,
-        ),
+        # migrations.AddField(
+        #     model_name='review',
+        #     name='buyer',
+        #     field=models.ForeignKey(
+        #         default=1,  # temporary default, jekono existing user ID
+        #         on_delete=models.CASCADE,
+        #         related_name='reviews_given',
+        #         to=settings.AUTH_USER_MODEL,
+        #     ),
+        #     preserve_default=False,
+        # ),
     ]

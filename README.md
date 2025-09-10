@@ -29,7 +29,7 @@ A Django-based freelancer marketplace platform where **buyers** can hire service
 - Reviews received from buyers.
 
 ### 📖 API Documentation
-- **Swagger/OpenAPI** auto-generated documentation available at:http://127.0.0.1:8000/swagger/
+- **Swagger/OpenAPI** auto-generated documentation available at: http://127.0.0.1:8000/swagger/
 
 ## ⚙️ Installation Guide
 

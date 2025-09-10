@@ -1,4 +1,5 @@
 
+from decouple import config
 from pathlib import Path
 import os
 
@@ -31,7 +32,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "freelancer_platform.urls"
+ROOT_URLCONF = "bongo_fiverr.urls"
 
 TEMPLATES = [
     {
@@ -51,12 +52,23 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "freelancer_platform.wsgi.application"
+WSGI_APPLICATION = "bongo_fiverr.wsgi.application"
+
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('dbname'),
+        'USER': config('user'),
+        'PASSWORD': config ('password'),
+        'HOST': config('host'),
+        'PORT': config('port'),
     }
 }
 

@@ -4,7 +4,7 @@ import os
 import sys
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'freelancer_platform.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'bongo_fiverr.settings')
     from django.core.management import execute_from_command_line
     execute_from_command_line(sys.argv)
 
