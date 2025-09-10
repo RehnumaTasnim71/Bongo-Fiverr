@@ -64,7 +64,6 @@
 
 
             <script>
-                // Toggle edit form visibility
                 document.getElementById('editProfileBtn').addEventListener('click', function () {
                     const formCard = document.getElementById('editProfileForm');
                     if (formCard.style.display === "none") {
@@ -76,7 +75,6 @@
                     }
                 });
 
-                // Profile picture live preview
                 function previewImage(event) {
                     const output = document.getElementById('profilePreview');
                     output.src = URL.createObjectURL(event.target.files[0]);

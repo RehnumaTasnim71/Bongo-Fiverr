@@ -58,14 +58,12 @@ def service_update(request, pk):
 
     return render(request, 'services/service_update.html', {
         'form': form,
-        'service': service  # ✅ This is critical for service.id in template
+        'service': service  
     })
 
 @login_required
 def service_delete(request, pk):
     service = get_object_or_404(Service, pk=pk)
-
-    # Only allow the seller who owns the service to delete
     if request.user != service.seller:
         messages.error(request, "You are not authorized to delete this service.")
         return redirect('service_list')
@@ -74,6 +72,4 @@ def service_delete(request, pk):
         service.delete()
         messages.success(request, "Service deleted successfully!")
         return redirect('service_list')
-
-    # Optional: Confirm delete page
     return render(request, 'services/service_confirm_delete.html', {'service': service})

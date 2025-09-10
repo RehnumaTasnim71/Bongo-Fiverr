@@ -52,9 +52,9 @@ def order_detail(request, pk):
             if form.is_valid():
                 review = form.save(commit=False)
                 review.order = order
-                review.buyer = request.user     # instead of reviewer
+                review.buyer = request.user     
                 review.seller = order.seller
-                review.service = order.service  # set service
+                review.service = order.service  
                 review.save()
 
 
@@ -95,7 +95,7 @@ def buyer_dashboard(request):
         'orders': orders,
         'reviews': reviews,
         'applied_services': applied_services,
-        'status_filter': status_filter,  # template er jonno
+        'status_filter': status_filter,  
     }
 
     return render(request, 'orders/buyer_dashboard.html', context)

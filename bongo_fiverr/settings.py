@@ -9,7 +9,7 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'dev-secret-key-change-this'
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = [".vercel.app", '127.0.0.1']
 
 INSTALLED_APPS = [
@@ -81,9 +81,9 @@ DATABASES = {
 
 # Configuration for cloudinary      
 cloudinary.config( 
-    cloud_name = config('cloud_name'), 
-    api_key = config('api_key'), 
-    api_secret = config('api_secret'),
+    cloud_name = config("CLOUD_NAME"), 
+    api_key = config("API_KEY"), 
+    api_secret = config("API_SECRET"),
     secure=True
 )
 
