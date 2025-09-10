@@ -10,7 +10,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = 'dev-secret-key-change-this'
 DEBUG = True
-ALLOWED_HOSTS = [".vercel.app", '127.0.0.1']
+ALLOWED_HOSTS = [".vercel.app", 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
@@ -102,7 +102,7 @@ TIME_ZONE = "Asia/Dhaka"
 USE_I18N = True
 USE_TZ = True
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [ BASE_DIR / "static" ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
@@ -114,8 +114,8 @@ AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "login"
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_ROOT = BASE_DIR / "media"
 
