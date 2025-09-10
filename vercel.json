@@ -1,7 +1,7 @@
 {
     "builds": [
         {
-            "src": "bongo_fiverr/wsgi-py",
+            "src": "bongo_fiverr/wsgi.py",
             "use": "@vercel/python",
             "config": 
             {
@@ -14,7 +14,7 @@
     "routes": [
         {
             "src": "/(.*)",
-            "dest": "bongo_fiverr/wsgi-py"
+            "dest": "bongo_fiverr/wsgi.py"
         }
     ]
 }
