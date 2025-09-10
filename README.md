@@ -1,8 +1,6 @@
 
 # Bongo-Fiverr (Django)
 
-# 🛠️ Freelancer Platform
-
 A Django-based freelancer marketplace platform where **buyers** can hire services, place orders, and leave reviews, while **sellers** can manage their services, track earnings, and view customer feedback.
 
 ---
