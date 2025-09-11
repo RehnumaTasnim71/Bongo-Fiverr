@@ -18,9 +18,9 @@ A Django-based freelancer marketplace platform where **buyers** can hire service
 - Order tracking with status updates (`pending`, `completed`, etc.).
 
 ### ⭐ Reviews & Ratings
-- Buyers can submit **reviews** for completed orders.
-- Reviews include **rating + comment**.
-- Sellers can view all reviews in their dashboard.
+- Buyers can submit **reviews** for completed orders
+- Reviews include **rating + comment**
+- Sellers can view all reviews in their dashboard
 
 ### 💰 Seller Dashboard
 - List of all posted services.
