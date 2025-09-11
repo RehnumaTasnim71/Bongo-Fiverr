@@ -8,9 +8,9 @@ A Django-based freelancer marketplace platform where **buyers** can hire service
 ## ✨ Features
 
 ### 👥 User Management
-- Custom user model with **Buyer** & **Seller** roles.
-- Secure authentication (signup, login, logout).
-- Profile management with editable user details.
+- Custom user model with **Buyer** & **Seller** roles
+- Secure authentication (signup, login, logout)
+- Profile management with editable user details
 
 ### 📦 Services & Orders
 - Sellers can **create & manage services**.
