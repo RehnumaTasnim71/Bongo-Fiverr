@@ -1,16 +1,12 @@
 {
+    "$schema": "https://openapi.vercel.sh/vercel.json",
+    "buildCommand": "python -m pip install -r requirements.txt && python manage.py collectstatic --noinput",
     "builds": [
         {
             "src": "bongo_fiverr/wsgi.py",
-            "use": "@vercel/python",
-            "config": 
-            {
-                "maxLambdaSize": "15mb",
-                "runtime": "python3.11.3"
-            }
+            "use": "@vercel/python"
         }
     ],
-
     "routes": [
         {
             "src": "/(.*)",
